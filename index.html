@@ -234,8 +234,6 @@ Error message and password prompt
 
 <li>$:/state/sidebar</li>
 
-<li>$:/state/tab/sidebar--595412856</li>
-
 <li>$:/status/RequireReloadDueToPluginChange</li>
 
 <li>$:/status/UserName</li>
@@ -293,6 +291,8 @@ Error message and password prompt
 <li>Visual Studio 中关于字符集的设置的解释</li>
 
 <li>中耕机</li>
+
+<li>关于GC-MS中柱过载、前沿峰的一些想法</li>
 
 <li>半神</li>
 
@@ -439,11 +439,10 @@ Error message and password prompt
 {"created":"20211122090649739","creator":"GTOL","text":"hide","title":"$:/state/image-picker/system--1654758284","modified":"20211122090650321","modifier":"GTOL"},
 {"created":"20211122091028701","creator":"GTOL","title":"$:/state/showeditpreview","text":"yes","modified":"20220308035601588","modifier":"GTOL"},
 {"created":"20220707102107977","creator":"GTOL","title":"$:/state/ShowPaletteEditor","text":"no","modified":"20220707102459886","modifier":"GTOL"},
-{"created":"20211122085629138","creator":"GTOL","title":"$:/state/sidebar","text":"yes","modified":"20211122085630102","modifier":"GTOL"},
-{"created":"20230224093432183","creator":"GTOL","title":"$:/state/tab/sidebar--595412856","text":"$:/core/ui/SideBar/Tools","modified":"20230224093432183","modifier":"GTOL"},
+{"created":"20211122085629138","creator":"GTOL","title":"$:/state/sidebar","text":"no","modified":"20230309073335647","modifier":"GTOL"},
 {"title":"$:/status/RequireReloadDueToPluginChange","text":"no"},
 {"created":"20211122084219100","creator":"G","title":"$:/status/UserName","text":"GTOL","modified":"20211122084219597","modifier":"GTO"},
-{"title":"$:/StoryList","text":"","list":"欢迎"},
+{"title":"$:/StoryList","text":"","list":"关于GC-MS中柱过载、前沿峰的一些想法"},
 {"created":"20211122093036751","creator":"GTOL","title":"$:/tags/PageControls","list":"$:/core/ui/Buttons/home $:/core/ui/Buttons/close-all $:/core/ui/Buttons/fold-all $:/core/ui/Buttons/unfold-all $:/core/ui/Buttons/permaview $:/core/ui/Buttons/new-tiddler $:/core/ui/Buttons/new-journal $:/core/ui/Buttons/new-image $:/core/ui/Buttons/import $:/core/ui/Buttons/export-page $:/core/ui/Buttons/control-panel $:/core/ui/Buttons/advanced-search $:/core/ui/Buttons/manager $:/core/ui/Buttons/tag-manager $:/core/ui/Buttons/language $:/core/ui/Buttons/palette $:/core/ui/Buttons/theme $:/core/ui/Buttons/storyview $:/core/ui/Buttons/encryption $:/core/ui/Buttons/timestamp $:/core/ui/Buttons/full-screen $:/core/ui/Buttons/print $:/core/ui/Buttons/save-wiki $:/core/ui/Buttons/refresh $:/core/ui/Buttons/more-page-actions","modified":"20211122093036751","modifier":"GTOL"},
 {"created":"20211122092926594","creator":"GTOL","title":"$:/tags/ViewToolbar","list":"$:/core/ui/Buttons/fold-others $:/core/ui/Buttons/close-others $:/core/ui/Buttons/open-window $:/core/ui/Buttons/permalink $:/core/ui/Buttons/permaview $:/core/ui/Buttons/export-tiddler $:/core/ui/Buttons/new-here $:/core/ui/Buttons/new-journal-here $:/core/ui/Buttons/clone $:/core/ui/Buttons/info $:/core/ui/Buttons/edit $:/core/ui/Buttons/delete $:/core/ui/Buttons/fold-bar $:/core/ui/Buttons/fold $:/core/ui/Buttons/more-tiddler-actions $:/core/ui/Buttons/close","modified":"20211122093644209","modifier":"GTOL"},
 {"created":"20211122084311352","creator":"GTOL","title":"$:/theme","text":"$:/themes/tiddlywiki/snowwhite","modified":"20211122093419246","modifier":"GTOL"},
@@ -470,6 +469,7 @@ Error message and password prompt
 {"created":"20220707095439669","creator":"GTOL","text":"","tags":"编程 C/C++","title":"Unicode 字符集与 Multi-Byte 字符集的区别","modified":"20220707095506689","modifier":"GTOL"},
 {"created":"20220707094159989","creator":"GTOL","text":"在 Visual Studio 的设置界面中有一项叫做“Character Set”，有三个选项：\n\n* Use Unicode Character Set（使用 Unicode 字符集）\n* Use Multi-Byte Character Set（使用变长编码字符集）\n* Not Set\n\n关于这两种字符集的区别，可以看看[[这篇Tiddle|Unicode 字符集与 Multi-Byte 字符集的区别]]。\n\n首先讲一下这几个选项分别会产生什么效果。\n\n当选择“Use Unicode Character Set”时，一些 Windows 系统的宏（MACRO）会被替换为对应的宽字符（Wide Character）版本。比如：\n\n* `TCHAR`会被替换为`wchar_t`\n* `LoadLibrary`会被替换为`LoadLibraryW`，接受`LPCWSTR`作为参数\n* `T(\"Hello\")`会被替换为`L\"Hello\"`\n\n当选择“Use Multi-Byte Character Set”时，则会指向对应的单字符版本\n\n* `TCHAR`会指向`char`\n* `LoadLibrary`会指向`LoadLibraryA`，接受`LPCSTR`作为参数\n* `T(\"Hello\")`会被替换为`\"Hello\"`\n\n当选择“Not Set”时，这些宏会未定义或使用默认值。\n\n然后讲讲为什么会这样设置。\n\n在早期的 Windows 版本中（指 9X 版本），Windows 不支持 Unicode。当 Windows 对传入的字符串解码时，在不同语言的系统上，由于使用的字符集不同，同一串二进制数据可能会得到不同的解码结果。于是乎，后面的 Windows API 加入了 Unicode 版本来解决这个问题，只要你使用 Unicode 来编程，就可以直接在不同语言的系统上运行了。\n\n这个选项，以及`TCHAR`之类的宏，都是在这样的大环境下出现的。当时的程序员需要同时对新旧系统提供支持，通过使用这个选项，省去了为新旧系统准备两份代码的时间，只要在书写代码时使用把对应的函数和类型换成宏，并且准备不同的编译脚本就可以了。\n\n既然已经不需要面向旧系统了，我们该如何优雅的编程呢？\n\n个人认为，不要使用该选项对应的宏，直接手动使用宽字符版本的类型和函数（`wchar_t`、`L\"ABC\"`、`LoadLibraryW`）。这样可以减少代码的复杂度和理解难度，并且在当前不会有什么兼容性问题。\n\n参考资料：\n\n# https://stackoverflow.com/questions/9349342/about-the-character-set-option-in-visual-studio\n# https://stackoverflow.com/questions/18959551/what-is-character-set-in-visual-studio\n","tags":"编程 C/C++","title":"Visual Studio 中关于字符集的设置的解释","modified":"20220805033232267","modifier":"GTOL"},
 {"created":"20211123140821185","creator":"GTOL","text":"中耕机，Cultivator，在游戏里可以在两次种植之间使用，耕地为下一次种植做准备。\n\n现实生活中，中耕机也是用来搅拌和打碎地表土层的。中耕机可以用来在播种前翻地和平地，将作物残留物或肥料埋进地底。除此之外，中耕机还可以在作物生长期间使用，用来清除作物行间的杂草，这种被叫做行间中耕机。\n\n相比于犁，中耕机的齿更浅，也更细。犁的翻土效果更好，中耕机则主要是松土和平整土地。\n\n历史上由于除草剂的盛行，中耕机曾没落过一段时间，但是人们发现除草剂的限制之后，中耕机的地位又再度上升了。\n\nCultivator 这个词，也是由 cultivate（耕耘，培育）这个词转化而来，可以想象一下农民伯伯耕地为了让下一波庄稼长得更好的样子，起这样一个名字大概就是这个意思。","tags":"[[Farming Simulator]]","title":"中耕机","modified":"20211123144221506","modifier":"GTOL"},
+{"created":"20230309065105082","creator":"GTOL","text":"今天收到了了一批GCMS数据，是对同一样本在不同分流比下的重复试验。在这些数据中有一个共同点：数据中最高的峰的形状像数字“4”一样，左侧是个斜坡，右侧则近似垂直线，并且峰的高度、宽度都与进样量正相关。为了方便，我们把这个峰叫做A。有意思的地方来了，由于X的宽度在不同数据中不一样，A之后的峰的析出时间会根据X的宽度而推迟。离A越近的峰偏移量就越大。峰的偏移量会随着时间而减小，在A之后的5~6分钟内，不同数据中的偏移会逐步消失，之后出现的峰的析出时间又回到了一致。\n\n经过调查，这种现象一般就是样品过载，但是为了分析一些痕量成分，我们又不能进一步减少进样量，所以，我在想，是否有一种办法来计算出析出时间的恢复速度。这样我们就可以用已有数据中A和目标峰（X）的实验析出时间，来计算出X在无干扰情况下的理想析出时间。之后在新样品（T）出来以后，可以直接由A的实验时间和X的理想时间计算出X（T）的实验析出时间。\n\n此外，还应该去研究一下前沿峰的形成原因，这样有助与对前沿峰进行定量分析，和计算合适的进样量。","title":"关于GC-MS中柱过载、前沿峰的一些想法","tags":"日志 分析化学","modified":"20230309075121058","modifier":"GTOL"},
 {"created":"20220301141513371","creator":"GTOL","text":"半神是女王[[玛莉卡]]的孩子。\n\n半神拥有大卢恩的力量，半神互相争夺大卢恩。\n\n半神被无上意志所抛弃。半神无法成为艾尔登之王。\n\n褪色者可以通过杀死半神夺取\n\n“接肢”葛瑞克是半神后代子孙，所以力量最弱。","title":"半神","modified":"20220308011446748","modifier":"GTOL","tags":"艾尔登法环"},
 {"created":"20220307024511265","creator":"GTOL","text":"\"\"\"\n月之女王授予勋章的骑士\n皆是万夫莫敌的英雄，无一例外——\n然而王室衰微，英雄也随之消逝。\n\"\"\"","tags":"艾尔登法环","title":"卡利亚骑士套装","modified":"20220307024656158","modifier":"GTOL"},
 {"created":"20220308013117246","creator":"GTOL","text":"\"\"\"\n魔法学院雷亚卢卡利亚之中，\n在探索之路受到肯定的学徒\n穿戴的其中一种辉石头罩。\n\n历史最悠久的卡勒罗斯教室，\n视魔法师亚兹勒为他们的根本，\n探索着彗星类的魔法。\n\"\"\"","tags":"艾尔登法环","title":"卡勒罗斯辉石头罩","modified":"20220308013245135","modifier":"GTOL"},
